@@ -15,12 +15,12 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       port: +process.env.DB_PORT || 5432,
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      // entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false,
-      // migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-      // cli: {
-      //   migrationsDir: 'src/migrations',
-      // },
+      migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+      cli: {
+        migrationsDir: 'src/migrations',
+      },
     };
   },
 };

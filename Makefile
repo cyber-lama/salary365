@@ -23,10 +23,13 @@ test:
 	echo $(DB_PASSWORD):$(DB_USER):$(DB_HOST) ${PWD}
 
 migrate:
-	docker-compose exec app migrate create -ext sql -dir db/migrations ${name}
+	docker-compose exec app yarn migration:create ${name}
 
 migrate-up:
-	docker-compose exec app migrate -database "postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):5432/$(DB_NAME)?sslmode=disable" -path db/migrations up
+	docker-compose exec app yarn migration:run
+
+migrate-generate:
+	docker-compose exec app yarn migration:generate
 
 migrate-down:
-	docker-compose exec app migrate -database "postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):5432/$(DB_NAME)?sslmode=disable" -path db/migrations down ${step}
+	docker-compose exec app yarn migration:revert

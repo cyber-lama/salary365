@@ -21,7 +21,7 @@ export class UserController {
     type: User,
   })
   @ApiBadRequestResponse({
-    description: 'Пользователь не может быть зарегистрирован!',
+    description: 'Возвращается массив объектов ошибок',
   })
   async doUserRegistration(
     @Body() userRegister: UserRegisterRequestDto,

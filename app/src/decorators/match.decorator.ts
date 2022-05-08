@@ -1,38 +1,32 @@
-import { ClassConstructor } from 'class-transformer';
 import {
   registerDecorator,
   ValidationArguments,
   ValidationOptions,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
 } from 'class-validator';
 
 export const Match = <T>(
-  type: ClassConstructor<T>,
-  property: (o: T) => any,
+  property: keyof T,
   validationOptions?: ValidationOptions,
 ) => {
-  console.log(property)
   return (object: any, propertyName: string) => {
     registerDecorator({
+      name: 'isEqualTo',
       target: object.constructor,
       propertyName,
-      options: validationOptions,
       constraints: [property],
-      validator: MatchConstraint,
+      options: validationOptions,
+      validator: {
+        validate(value: any, args: ValidationArguments) {
+          const [relatedPropertyName] = args.constraints;
+          const relatedValue = (args.object as any)[relatedPropertyName];
+          return value === relatedValue;
+        },
+
+        defaultMessage(args: ValidationArguments) {
+          const [relatedPropertyName] = args.constraints;
+          return `${propertyName} must match ${relatedPropertyName} exactly`;
+        },
+      },
     });
   };
 };
-
-@ValidatorConstraint({ name: 'Match' })
-export class MatchConstraint implements ValidatorConstraintInterface {
-  validate(value: any, args: ValidationArguments) {
-    const [fn] = args.constraints;
-    return fn(args.object) === value;
-  }
-
-  defaultMessage(args: ValidationArguments) {
-    const [constraintProperty]: (() => any)[] = args.constraints;
-    return `${constraintProperty} and ${args.property} does not match`;
-  }
-}

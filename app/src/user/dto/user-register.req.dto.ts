@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, Length, validate } from 'class-validator';
+import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 import { Match } from '../../decorators/match.decorator';
 
 export class UserRegisterRequestDto {
@@ -41,7 +41,8 @@ export class UserRegisterRequestDto {
   @Match<UserRegisterRequestDto>('password', {
     message: 'Поле «Подтвердите пароль» должно совпадать с полем «Пароль»',
   })
-  @IsNotEmpty({ message: 'Поле «Подтвердите пароль» обязательно для заполнения' })
+  @IsNotEmpty({
+    message: 'Поле «Подтвердите пароль» обязательно для заполнения',
+  })
   confirm: string;
 }
-// validate(UserRegisterRequestDto).then((errors) => console.log(errors));

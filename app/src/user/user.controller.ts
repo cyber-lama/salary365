@@ -24,8 +24,7 @@ export class UserController {
     description: 'Пользователь не может быть зарегистрирован!',
   })
   async doUserRegistration(
-    @Body(SETTINGS.VALIDATION_PIPE)
-    userRegister: UserRegisterRequestDto,
+    @Body() userRegister: UserRegisterRequestDto,
   ): Promise<User> {
     return await this.userService.doUserRegistration(userRegister);
   }

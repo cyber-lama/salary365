@@ -19,6 +19,9 @@ logs-nginx:
 exec-app:
 	docker-compose exec app bash
 
+exec-nginx:
+	docker-compose exec nginx bash
+
 test:
 	echo $(DB_PASSWORD):$(DB_USER):$(DB_HOST) ${PWD}
 
@@ -33,3 +36,12 @@ migrate-generate:
 
 migrate-down:
 	docker-compose exec app yarn migration:revert
+#
+#module:
+#	docker-compose exec app nest g module ${name}
+#
+#service:
+#	docker-compose exec app nest g service ${name}
+#
+#controller:
+#	docker-compose exec app nest g controller ${name}

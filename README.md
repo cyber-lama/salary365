@@ -2,14 +2,14 @@
 В файле ***.env*** указываем свой `DOCKER_UID`, `DOCKER_USER`
 
 В файле ***/etc/hosts*** проксируем `localhost` 
-на домены для `dev` и `prod` разработки,
+на hosts для `dev` и `prod` разработки,
 ```
 127.0.1.1 api.salary.loc
 127.0.1.1 api.salary.prod
 ```
 
-В файлах ***nginx.conf.dev*** указываем 
-домены с ***/etc/hosts***
+В файлах ***nginx.conf.dev*** указываем
+hosts с ***/etc/hosts***
 ```
 server_name api.salary.loc;
 server_name api.salary.prod;

@@ -39,11 +39,11 @@ export class User extends BaseEntity {
 
   @ApiProperty({ description: 'Когда пользователь был создан' })
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @ApiProperty({ description: 'Когда данные пользователя были обновлены' })
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @BeforeInsert()
   async setPassword(password: string) {

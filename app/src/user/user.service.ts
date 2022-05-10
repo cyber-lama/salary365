@@ -4,6 +4,7 @@ import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserType } from './types/user.type';
+import {UserNotFoundException} from "../exceptions/user-not-found.exception";
 
 @Injectable()
 export class UserService {
@@ -29,8 +30,7 @@ export class UserService {
 
   async getUserById(id: number): Promise<UserEntity> {
     const user = await this.userRepository.findOne({ where: { id } });
-    if (!user)
-      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    if (!user) throw new UserNotFoundException();
     return this.userRepository.findOne({ where: { id } });
   }
 

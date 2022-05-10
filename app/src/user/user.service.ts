@@ -3,7 +3,7 @@ import { UserRegisterRequestDto } from './dto/user-register.req.dto';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserType } from './types/user.type';
+import { UserTypeResponse } from './types/userTypeResponse';
 import {UserNotFoundException} from "../exceptions/user-not-found.exception";
 
 @Injectable()
@@ -34,11 +34,9 @@ export class UserService {
     return this.userRepository.findOne({ where: { id } });
   }
 
-  buildUserResponse(user: UserEntity): UserType {
-    if (user) {
-      const { password, ...result } = user;
-      return result;
-    }
-    return user;
+  buildUserResponse(user: UserEntity): UserTypeResponse {
+    const copyUser = { ...user };
+    delete copyUser.password;
+    return copyUser;
   }
 }

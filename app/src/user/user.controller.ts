@@ -8,7 +8,7 @@ import {
 import { UserRegisterRequestDto } from './dto/user-register.req.dto';
 import { UserEntity } from './user.entity';
 import { UserService } from './user.service';
-import { UserType } from './types/user.type';
+import { UserTypeResponse } from './types/userTypeResponse';
 
 @ApiTags('User')
 @Controller('user')
@@ -25,13 +25,13 @@ export class UserController {
   })
   async doUserRegistration(
     @Body() userRegister: UserRegisterRequestDto,
-  ): Promise<UserType> {
+  ): Promise<UserTypeResponse> {
     const user = await this.userService.doUserRegistration(userRegister);
     return this.userService.buildUserResponse(user);
   }
 
   @Get(':id')
-  async getUserById(@Param('id') id: number): Promise<UserType> {
+  async getUserById(@Param('id') id: number): Promise<UserTypeResponse> {
     const user = await this.userService.getUserById(id);
     return this.userService.buildUserResponse(user);
   }

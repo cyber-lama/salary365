@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -6,8 +6,9 @@ import {
 } from '@nestjs/swagger';
 
 import { UserRegisterRequestDto } from './dto/user-register.req.dto';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { UserService } from './user.service';
+import { UserType } from './types/user.type';
 
 @ApiTags('User')
 @Controller('user')
@@ -17,14 +18,21 @@ export class UserController {
   @Post('/register')
   @ApiCreatedResponse({
     description: 'Объект созданного пользователя является ответом',
-    type: User,
+    type: UserEntity,
   })
   @ApiBadRequestResponse({
     description: 'Возвращается массив объектов ошибок',
   })
   async doUserRegistration(
     @Body() userRegister: UserRegisterRequestDto,
-  ): Promise<User> {
-    return await this.userService.doUserRegistration(userRegister);
+  ): Promise<UserType> {
+    const user = await this.userService.doUserRegistration(userRegister);
+    return this.userService.buildUserResponse(user);
+  }
+
+  @Get(':id')
+  async getUserById(@Param('id') id: number): Promise<UserType> {
+    const user = await this.userService.getUserById(id);
+    return this.userService.buildUserResponse(user);
   }
 }

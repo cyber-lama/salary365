@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   BeforeInsert,
   Column,
   CreateDateColumn,
@@ -12,7 +11,7 @@ import { UserRoles } from './enums/user.enum';
 import * as bcrypt from 'bcrypt';
 
 @Entity({ name: 'users' })
-export class User extends BaseEntity {
+export class UserEntity {
   @ApiProperty({ description: 'Primary key as User ID', example: 1 })
   @PrimaryGeneratedColumn()
   id: number;

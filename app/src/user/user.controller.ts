@@ -4,7 +4,6 @@ import {
   ApiCreatedResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { SETTINGS } from 'src/app.utils';
 
 import { UserRegisterRequestDto } from './dto/user-register.req.dto';
 import { User } from './user.entity';

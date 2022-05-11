@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { UserRoles } from '../../user/enums/user.enum';
+import {UserRoles} from "../../modules/user/enums/user.enum";
 
 export class test1652013158621 implements MigrationInterface {
   private usersTable = new Table({

@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { ValidationError } from '@nestjs/common/interfaces/external/validation-error.interface';
-import { formatErrorsHelper } from './helpers/formatErrors.helper';
+import {formatErrorsHelper} from "./common/helpers/formatErrors.helper";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });

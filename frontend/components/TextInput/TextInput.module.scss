@@ -1,0 +1,7 @@
+@import '../../styles/mixins/typography';
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  @include text5;
+}

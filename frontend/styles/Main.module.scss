@@ -1,0 +1,84 @@
+@import './mixins/colors';
+@import './mixins/media';
+
+.mainBlock {
+  display: flex;
+
+  .mainFeatures {
+    h1 {
+      margin-top: 40px;
+      margin-bottom: 40px;
+
+      @include forLaptop {
+        font-size: 50px;
+        line-height: 50px;
+      }
+    }
+
+    .steps {
+      list-style-type: none; 
+      counter-reset: num;
+      margin-block: 40px 48px;
+      padding-left: 0;
+
+      @include forMobile {
+        margin-block: 36px;
+      }
+
+      li {
+        position: relative;	
+        font-size: 20px;
+        line-height: 40px;
+        margin-bottom: 10px;
+        color: $blueDark;
+        padding-left: 60px;
+        
+        @include forMobile {
+          font-size: 16px;
+          line-height: 30px;
+          padding-left: 40px;
+        }
+
+        &::before {
+          position: absolute;
+          left: 0;
+          display: inline-block;
+          content: counter(num);
+          counter-increment: num;
+          border: solid 1px $blueDark;
+          width: 40px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          border-radius: 20px;
+          
+          @include forMobile {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+          }
+        }
+      }
+    }
+  }
+
+  .mainImage {
+    background-image: url('../assets/images/main_img.png');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: contain;
+  }
+
+  .authButtons {
+    margin-bottom: 40px;
+    
+    @include forLaptop {
+      margin-top: 40px;
+    }
+    
+    @include forDesktop {
+      margin-top: 40px;
+    }
+
+  }
+}

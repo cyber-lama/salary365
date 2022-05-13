@@ -1,0 +1,21 @@
+@import '../../styles/mixins/media';
+@import '../../styles/mixins/typography';
+
+.label {
+  @include text5;
+  margin-bottom: 7px;
+  color: rgba(12, 6, 21, 0.7);
+}
+
+.value {
+  font-weight: 600;
+  @include text2;
+
+  &.nowrap {
+    white-space: nowrap;
+  }
+
+  @include forMobile {
+    @include text4;
+  }
+}

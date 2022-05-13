@@ -1,9 +1,16 @@
 server{
     listen 80;
 
-    server_name api.salary.loc;
+    server_name salary.loc;
 
     location / {
+        proxy_pass http://frontend:3000;
+        # needed for sockets and hot front reload
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+    }
+    location /app {
             proxy_pass http://app:3001;
             rewrite ^/app/(.*) /$1 break;
     }

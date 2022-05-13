@@ -29,7 +29,7 @@ export class UserService {
   }
   async getUserByName(name: string): Promise<UserEntity | undefined> {
     return this.userRepository.findOne({
-      where: name,
+      name: name,
     });
   }
   async getUserById(id: number): Promise<UserEntity> {

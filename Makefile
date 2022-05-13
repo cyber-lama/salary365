@@ -1,6 +1,9 @@
 include ${PWD}/.env
 export
 
+build-no-cache:
+	docker-compose build --no-cache
+
 dev:
 	docker-compose -f docker-compose.yml -f docker-compose.development.yml up --build
 
@@ -11,10 +14,13 @@ down:
 	docker-compose down
 
 logs-app:
-	docker logs --follow docker-app
+	docker logs --follow salary-app
+
+logs-frontend:
+	docker logs --follow salary-frontend
 
 logs-nginx:
-	docker logs --follow docker-nginx
+	docker logs --follow salary-nginx
 
 exec-app:
 	docker-compose exec app bash

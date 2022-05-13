@@ -1,0 +1,64 @@
+@import '../../styles/mixins/colors';
+@import '../../styles/mixins/typography';
+@import '../../styles/mixins/scrollbars';
+
+.autocompleteListbox {
+  top: 10px !important;
+  
+  .listboxHelperText {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    color: $blueDark;
+    
+    .text {
+      padding: 8px 16px;
+      background-color: white;
+      @include text5;
+    }
+  }
+
+  :global(.MuiPaper-root) {
+    background-color: white;
+    border: 1px solid $primary;
+    border-radius: 10px;
+
+    @include scrollbars(8px, #611BE0, #BAA8DC);
+  }
+
+  :global(.MuiAutocomplete-listbox) {
+    color: $blueDark;
+    font-size: 18;
+    overflow: unset;
+    padding-top: 0;
+    max-height: 300px;
+
+    :global(.MuiAutocomplete-option:hover), :global(.MuiAutocomplete-option.Mui-focused) {
+      @include color-opacity('background-color', $primary, 0.1)
+    }
+
+    :global(.MuiAutocomplete-option) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .optionMain {
+        @include text3;
+        font-weight: 600;
+      }
+      
+      .optionAdditional {
+        @include text4;
+        font-weight: 400;
+      }
+    }
+
+    :global(.MuiAutocomplete-option[aria-selected="true"]) {
+      @include color-opacity('background-color', $primary, 0.2)
+    }
+  }
+
+  :global(.MuiOutlinedInput-root) {
+    padding: 0;
+  }
+}

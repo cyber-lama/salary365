@@ -1,0 +1,28 @@
+$desktop: 1200px;
+$laptop: 900px;
+$tablet: 600px;
+
+@mixin forDesktop {
+  @media all and (min-width: #{$desktop}) {
+    @content;
+  }
+}
+
+@mixin forLaptop {
+  @media all and (min-width: #{$laptop}) and (max-width: #{$desktop}) {
+    @content;
+  }
+}
+
+@mixin forTablet {
+  @media all and (min-width: #{$tablet}) and (max-width: #{$laptop}) {
+    @content;
+  }
+}
+
+
+@mixin forMobile {
+  @media all and (max-width: #{$tablet}) {
+    @content;
+  }
+}

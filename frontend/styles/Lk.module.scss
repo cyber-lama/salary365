@@ -1,0 +1,72 @@
+@import './mixins/colors';
+@import './mixins/media';
+@import './mixins/typography';
+
+
+.wrapper {
+  margin-bottom: 60px;
+
+  @include forDesktop {
+    margin-top: 60px;
+  }
+}
+
+.userData {
+  height: 100%;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: 0px 6px 10px rgba(172, 171, 171, 0.1);
+  padding-block: 40px;
+  padding-inline: 20px;
+
+  @include text5;
+
+  @include forDesktop {
+    padding-inline: 50px 20px;
+  }
+
+  .userName {
+    margin-top: 0;
+    flex-grow: 1;
+  }
+
+  .settingsBtn {
+    padding: 0;
+    min-width: 24px;
+  }
+
+  .availableSum {
+    margin-top: 8px;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 40px;
+    .decimals {
+      @include text1;
+      font-weight: 800;
+    }
+  }
+
+  .additionalSalaryInfo {
+    &>div {
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+  }
+}
+
+.payoutData {
+  height: 100%;
+  background-color: $primary;
+  border-radius: 10px;
+  box-shadow: 0px 6px 10px rgba(80, 23, 187, 0.1);
+  padding: 50px 20px 20px;
+  color: $white;
+
+  @include text5;
+
+  input.sumInput {
+    font-weight: 600;
+    font-size: 40px;
+    padding: 8px 16px;
+  }
+}

@@ -1,0 +1,86 @@
+@import '../../styles/mixins/colors';
+@import '../../styles/mixins/media';
+@import '../../styles/mixins/scrollbars';
+
+.componentBackground {
+  position: relative;
+  // top: 70px;
+  background: $white;
+  margin: 0 auto;
+  // left: 50%;
+  // transform: translateX(-50%);
+  border-radius: 10px;
+  padding: 40px 60px;
+  min-width: 280px;
+  max-width: 60%;
+  margin-inline: 100px;
+  margin-block: 70px;
+  // max-height: calc(100% - 140px);
+
+  @include forMobile {
+    padding-inline: 20px;
+    transform: unset;
+    margin-inline: unset;
+    max-width: unset;
+  }
+  @include forTablet {
+    max-width: 80%;
+    min-width: 500px;
+  }
+  @include forLaptop {
+    max-width: 70%;
+    min-width: 600px;
+  }
+
+  &.fullWidth {
+    max-width: unset;
+    margin-inline: unset;
+    transform: unset;
+    min-width: unset;
+  }
+}
+
+.modalWrapper {
+  outline: none;
+  position: relative;
+  min-height: 100%;
+  overflow: auto;
+
+  .modalContentWrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  padding: 0;
+  outline: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 2;
+  
+  &.outside {
+    top: 70px;
+    right: 0;
+    width: 50px;
+    @include forMobile {
+      width: 40px;
+      right: 30px;
+      top: 80px;
+    }
+  }
+
+  &.inside {
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    &>svg>path {
+      stroke: rgba(0, 0, 0, 0.3)
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@import '../../styles/mixins/media';
+@import '../../styles/mixins/typography';
+
+.row.row {
+  margin-bottom: 20px;
+  @include text2;
+  
+  @include forMobile {
+    @include text5;
+  }
+}
+
+.price {
+  text-align: right;
+  white-space: nowrap;
+
+  @include text1;
+  
+  @include forMobile {
+    @include text4;
+  }
+}
+
+.button {
+  margin-top: 15px;
+}

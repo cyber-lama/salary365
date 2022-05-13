@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { compare } from 'bcrypt';
 import { UserTypeResponse } from '../user/types/userTypeResponse';
@@ -7,15 +11,15 @@ import { UserTypeResponse } from '../user/types/userTypeResponse';
 export class AuthService {
   constructor(private userService: UserService) {}
 
-  async validateUser(email: string, pass: string): Promise<UserTypeResponse> {
-    const user = await this.userService.getUserByEmail(email);
-    if (!user) return null;
+  async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.userService.getUserByName(username);
+    if (!user) throw new BadRequestException();
 
     const isPasswordCorrect = await compare(pass, user.password);
 
     if (!isPasswordCorrect) {
-      return null;
+      throw new UnauthorizedException();
     }
-    return this.userService.buildUserResponse(user);
+    return user;
   }
 }

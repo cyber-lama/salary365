@@ -1,0 +1,22 @@
+@import '../styles/mixins/media';
+@import '../styles/mixins/typography';
+
+.userData {
+  padding: 40px 50px;
+  margin-top: 70px;
+  @include text5;
+
+  @include forMobile {
+    margin-top: 0;
+    padding: 20px;
+  }
+  
+  .headerWraper {
+    padding: 0;
+    
+    .username__header {
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+  }
+}

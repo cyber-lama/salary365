@@ -1,0 +1,43 @@
+@import './mixins/media';
+@import './mixins/typography';
+
+.errorWrapper {
+  width: 370px;
+  height: 370px;
+  background-image: url("data:image/svg+xml,%3Csvg width='202' height='206' viewBox='0 0 202 206' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3.00093 128.902C17.0951 181.63 72.6736 213.797 125.274 199.668C177.874 185.54 209.962 129.826 195.868 77.0978C181.774 24.3696 126.195 -7.79684 73.5951 6.33164' stroke='%23F0EFF1' stroke-opacity='0.6' stroke-width='5' stroke-miterlimit='10' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  
+  @include forMobile {
+    width: 200px;
+    height: 200px;
+  }
+
+  .errorCode {
+    font-weight: 700;
+    font-size: 120px;
+    line-height: 141px;
+    margin-block: 0;
+    margin-top: -20px;
+
+    @include forMobile {
+      font-weight: 700;
+      font-size: 50px;
+      line-height: 59px;
+    }
+  }
+
+  .errorText {
+    @include text1;
+    display: inline-block;
+    margin-top: 20px;
+    font-weight: normal;
+
+    @include forMobile {
+      @include text5;
+      margin-top: unset;
+      margin-top: 10px;
+    }
+  }
+}

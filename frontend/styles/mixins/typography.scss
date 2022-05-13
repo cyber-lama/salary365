@@ -1,0 +1,67 @@
+@import './media';
+
+@mixin heading1 {
+  font-weight: 800;
+  font-size: 60px;
+  line-height: 60px;
+
+  @include forTablet {
+    font-size: 48px;
+    line-height: 50px;
+  }
+
+  @include forMobile {
+    font-size: 31px;
+    line-height: 31px;
+  }
+}
+
+@mixin heading2 {
+  font-weight: 800;
+  font-size: 34px;
+  line-height: 40px;
+
+  @include forMobile {
+    font-size: 24px;
+    line-height: 24px;
+  }
+}
+
+@mixin heading3 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin-block: 60px 20px;
+
+  @include forMobile {
+    font-size: 16px;
+    line-height: 21px;
+    margin-block: 40px 10px;
+  }
+}
+
+@mixin text1 {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+@mixin text2 {
+  font-size: 20px;
+  line-height: 23px;
+}
+
+@mixin text3 {
+  font-size: 18px;
+  line-height: 21px;
+}
+
+@mixin text4 {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+@mixin text5 {
+  font-size: 14px;
+  line-height: 16px;
+}

@@ -17,9 +17,10 @@ export class UserService {
     userRegister: UserRegisterRequestDto,
   ): Promise<UserEntity> {
     const user = new UserEntity();
-    user.name = userRegister.name;
     user.email = userRegister.email;
-    user.password = userRegister.password;
+    user.phone = userRegister.phone;
+    user.employer = userRegister.employer;
+    user.snils = userRegister.snils;
 
     return await this.userRepository.save(user);
   }
@@ -27,9 +28,9 @@ export class UserService {
   async getUserByEmail(email: string): Promise<UserEntity | undefined> {
     return this.userRepository.findOne({ where: { email } });
   }
-  async getUserByName(name: string): Promise<UserEntity | undefined> {
+  async getUserByPhone(phone: string): Promise<UserEntity | undefined> {
     return this.userRepository.findOne({
-      name: name,
+      phone: phone,
     });
   }
   async getUserById(id: number): Promise<UserEntity> {
@@ -39,8 +40,8 @@ export class UserService {
   }
 
   buildUserResponse(user: UserEntity): UserTypeResponse {
-    const copyUser = { ...user };
-    delete copyUser.password;
-    return copyUser;
+    // const copyUser = { ...user };
+    // delete copyUser.password;
+    return user;
   }
 }

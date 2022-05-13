@@ -11,17 +11,22 @@ export class test1652013158621 implements MigrationInterface {
         isPrimary: true,
       },
       {
-        name: 'name',
-        type: 'character varying',
-        isNullable: false,
-      },
-      {
         name: 'email',
         type: 'character varying',
         isNullable: false,
       },
       {
-        name: 'password',
+        name: 'phone',
+        type: 'character varying',
+        isNullable: false,
+      },
+      {
+        name: 'employer',
+        type: 'character varying',
+        isNullable: false,
+      },
+      {
+        name: 'snils',
         type: 'character varying',
         isNullable: false,
       },

@@ -11,15 +11,15 @@ import { UserTypeResponse } from '../user/types/userTypeResponse';
 export class AuthService {
   constructor(private userService: UserService) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.userService.getUserByName(username);
+  async validateUser(phone: string, pass?: string): Promise<any> {
+    const user = await this.userService.getUserByPhone(phone);
     if (!user) throw new BadRequestException();
 
-    const isPasswordCorrect = await compare(pass, user.password);
-
-    if (!isPasswordCorrect) {
-      throw new UnauthorizedException();
-    }
+    // const isPasswordCorrect = await compare(pass, user.password);
+    //
+    // if (!isPasswordCorrect) {
+    //   throw new UnauthorizedException();
+    // }
     return user;
   }
 }

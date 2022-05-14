@@ -14,8 +14,6 @@ export const IsSnils = (validationOptions?: ValidationOptions) => {
       options: validationOptions,
       validator: {
         validate(snils: unknown) {
-          console.log(snils);
-
           // check type of value
           if (typeof snils === 'number') {
             snils = snils.toString();

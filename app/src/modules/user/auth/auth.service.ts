@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthHelper } from './auth.helper';
 import { UserEntity } from '../user.entity';
-import {RegisterDto} from "./dto/auth.dto";
+import { RegisterDto } from './dto/auth.dto';
+import { Tokens } from './types/tokens.type';
 
 @Injectable()
 export class AuthService {
@@ -37,5 +38,11 @@ export class AuthService {
     const decodeTokens = this.helper.decode(tokens.access_token);
     console.log(tokens, decodeTokens);
     return user;
+  }
+
+  public async refresh(user: UserEntity): Promise<Tokens> {
+    await this.repository.update(user.id, { last_login_at: new Date() });
+
+    return this.helper.generateToken(user);
   }
 }

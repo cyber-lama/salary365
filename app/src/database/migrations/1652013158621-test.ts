@@ -56,7 +56,40 @@ export class test1652013158621 implements MigrationInterface {
         isNullable: true,
       },
     ],
+    foreignKeys: {
+      columnNames: ["questionId"],
+      referencedColumnNames: ["id"],
+      referencedTableName: "user_tokens",
+      onDelete: 'CASCADE',
+    },
   });
+  private userToken = new Table({
+    name: 'user_tokens',
+    columns: [
+      {
+        name: 'id',
+        type: 'SERIAL',
+        isPrimary: true,
+      },
+      {
+        name: 'created_at',
+        type: 'TIMESTAMPTZ',
+        isNullable: false,
+        default: 'NOW()',
+      },
+      {
+        name: 'refresh_token',
+        type: 'character varying',
+        isNullable: false,
+      },
+      {
+        name: 'updated_at',
+        type: 'TIMESTAMPTZ',
+        isNullable: false,
+        default: 'NOW()',
+      },
+    ]
+  })
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.usersTable, true);
   }

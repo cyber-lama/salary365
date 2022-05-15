@@ -1,24 +1,21 @@
-import {
-  Injectable,
-  HttpException,
-  HttpStatus,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
 import { UserEntity } from '../user.entity';
+import { Tokens } from './types/tokens.type';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthHelper {
   @InjectRepository(UserEntity)
   private readonly repository: Repository<UserEntity>;
-
   private readonly jwt: JwtService;
+  private readonly config: ConfigService;
 
-  constructor(jwt: JwtService) {
+  constructor(jwt: JwtService, conf: ConfigService) {
     this.jwt = jwt;
+    this.config = conf;
   }
 
   // Decoding the JWT Token
@@ -32,35 +29,27 @@ export class AuthHelper {
   }
 
   // Generate JWT Token
-  public generateToken(user: UserEntity): string {
-    return this.jwt.sign({ id: user.id, email: user.email });
-  }
-
-  // Validate User's password
-  public isPasswordValid(password: string, userPassword: string): boolean {
-    return bcrypt.compareSync(password, userPassword);
-  }
-
-  // Encode User's password
-  public encodePassword(password: string): string {
-    const salt: string = bcrypt.genSaltSync(10);
-
-    return bcrypt.hashSync(password, salt);
-  }
-
-  // Validate JWT Token, throw forbidden error if JWT Token is invalid
-  private async validate(token: string): Promise<boolean | never> {
-    const decoded: unknown = this.jwt.verify(token);
-    if (!decoded) {
-      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    }
-
-    const user: UserEntity = await this.validateUser(decoded);
-
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
-    return true;
+  public async generateToken(user: UserEntity): Promise<Tokens> {
+    const { id, email } = user;
+    const [at, rt] = await Promise.all([
+      this.jwt.signAsync(
+        { id, email },
+        {
+          secret: this.config.get<string>('AT_SECRET'),
+          expiresIn: this.config.get<string>('AT_SECRET_EXPIRES_IN'),
+        },
+      ),
+      this.jwt.signAsync(
+        { id, email },
+        {
+          secret: this.config.get<string>('RT_SECRET'),
+          expiresIn: this.config.get<string>('RT_SECRET_EXPIRES_IN'),
+        },
+      ),
+    ]);
+    return {
+      access_token: at,
+      refresh_token: rt,
+    };
   }
 }

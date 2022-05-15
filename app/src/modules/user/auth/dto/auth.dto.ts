@@ -1,10 +1,5 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  Length,
-} from 'class-validator';
-import { IsSnils } from '../../../common/decorators/snils.decorator';
+import { IsEmail, IsNotEmpty, Length } from 'class-validator';
+import {IsSnils} from "../../../../common/decorators/snils.decorator";
 
 export class RegisterDto {
   @IsNotEmpty({

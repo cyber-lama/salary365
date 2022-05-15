@@ -50,6 +50,11 @@ export class test1652013158621 implements MigrationInterface {
         isNullable: false,
         default: 'NOW()',
       },
+      {
+        name: 'last_login_at',
+        type: 'TIMESTAMPTZ',
+        isNullable: true,
+      },
     ],
   });
   public async up(queryRunner: QueryRunner): Promise<void> {

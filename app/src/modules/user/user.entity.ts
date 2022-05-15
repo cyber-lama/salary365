@@ -35,4 +35,7 @@ export class UserEntity {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Column()
+  last_login_at: Date;
 }

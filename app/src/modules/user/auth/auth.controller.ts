@@ -1,10 +1,10 @@
 import { Body, Controller, Inject, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserEntity } from '../user.entity';
+import { UserEntity } from '../entities/user.entity';
 import { RegisterDto } from './dto/auth.dto';
 import { Request } from 'express';
 import { JwtRefreshTokenGuard } from './guards/jwt-refresh-token.guard';
-import {Tokens} from "./types/tokens.type";
+import { Tokens } from './types/tokens.type';
 
 @Controller('auth')
 export class AuthController {

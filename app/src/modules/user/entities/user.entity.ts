@@ -1,12 +1,13 @@
 import {
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-import { UserRoles } from './enums/user.enum';
+import { UserRoles } from '../enums/user.enum';
+import { RefreshTokenEntity } from './refresh-token.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -15,10 +16,14 @@ export class UserEntity {
 
   @Column({
     unique: true,
+    nullable: false,
   })
   email: string;
 
-  @Column()
+  @Column({
+    unique: true,
+    nullable: false,
+  })
   phone: string;
 
   @Column()
@@ -38,4 +43,7 @@ export class UserEntity {
 
   @Column()
   last_login_at: Date;
+
+  @OneToMany(() => RefreshTokenEntity, (token) => token.user)
+  tokens: RefreshTokenEntity[];
 }

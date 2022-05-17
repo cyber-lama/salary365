@@ -37,6 +37,6 @@ export class RefreshTokenEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  // @OneToMany(() => AccessTokenEntity, (token) => token.refresh_token_id)
-  // tokens: AccessTokenEntity[];
+  @OneToMany(() => AccessTokenEntity, (token) => token.refreshToken)
+  tokens: AccessTokenEntity[];
 }

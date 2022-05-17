@@ -5,6 +5,7 @@ import { RegisterDto } from './dto/auth.dto';
 import { Request } from 'express';
 import { JwtRefreshTokenGuard } from './guards/jwt-refresh-token.guard';
 import { Tokens } from './types/tokens.type';
+import { IUserResponse } from './types/user-register-response.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +13,7 @@ export class AuthController {
   private readonly service: AuthService;
 
   @Post('register')
-  private register(@Body() body: RegisterDto): Promise<UserEntity | never> {
+  private register(@Body() body: RegisterDto): Promise<IUserResponse | never> {
     return this.service.register(body);
   }
 

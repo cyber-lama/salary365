@@ -7,20 +7,22 @@ import { RegisterDto } from './dto/auth.dto';
 import { Tokens } from './types/tokens.type';
 import { RefreshTokenEntity } from '../entities/refresh-token.entity';
 import { AccessTokenEntity } from '../entities/access-token.entity';
+import { IUserResponse } from './types/user-register-response.interface';
 
 @Injectable()
 export class AuthService {
   @InjectRepository(UserEntity)
   private readonly userRepository: Repository<UserEntity>;
   @InjectRepository(RefreshTokenEntity)
-  private readonly RTRepository: Repository<RefreshTokenEntity>;
-  @InjectRepository(UserEntity)
-  private readonly ATRepository: Repository<AccessTokenEntity>;
+  private readonly refreshTokenRepository: Repository<RefreshTokenEntity>;
+  @InjectRepository(AccessTokenEntity)
+  private readonly accessTokenRepository: Repository<AccessTokenEntity>;
 
   @Inject(AuthHelper)
   private readonly helper: AuthHelper;
 
-  public async register(body: RegisterDto): Promise<UserEntity | never> {
+  public async register(body: RegisterDto): Promise<IUserResponse | never> {
+    // look at the uniqueness of the mail and phone number
     const { email, phone, employer, snils }: RegisterDto = body;
     let user: UserEntity = await this.userRepository.findOne({
       where: { email },
@@ -43,23 +45,33 @@ export class AuthService {
 
     user = await this.userRepository.save(user);
 
-    const tokens = await this.helper.generateToken(user);
-    const { access_token, refresh_token } = tokens;
+    // generate tokens by id and email fields
+    const generatedTokens = await this.helper.generateToken(user);
+    const { access_token, refresh_token } = generatedTokens;
 
-    let refreshToken = new RefreshTokenEntity();
-    refreshToken.token = refresh_token;
-    refreshToken.user_id = user.id;
-    //refreshToken.user = user;
-    // refreshToken = await this.RTRepository.save(refreshToken);
-    refreshToken = await this.RTRepository.save(refreshToken);
-    // console.log(refreshToken);
+    // save refresh token to db
+    let newRefreshToken = new RefreshTokenEntity();
+    newRefreshToken.token = refresh_token;
+    newRefreshToken.user_id = user.id;
+    newRefreshToken.last_used_at = new Date();
+    newRefreshToken = await this.refreshTokenRepository.save(newRefreshToken);
+    // let t = await this.refreshTokenRepository.findOne({ relations: ['user'] });
+    // t.user.phone = '77778888';
+    // await this.refreshTokenRepository.save(t);
 
-    let t = await this.RTRepository.findOne({ relations: ['user'] });
+    // save access token to db
+    const newAccessToken = new AccessTokenEntity();
+    newAccessToken.token = access_token;
+    newAccessToken.refresh_token_id = newRefreshToken.id;
+    newAccessToken.last_used_at = new Date();
+    await this.accessTokenRepository.save(newAccessToken);
 
-    t.user.phone = '77778888';
-    await this.RTRepository.save(t);
-
-    return user;
+    return {
+      user: {
+        ...user,
+        ...generatedTokens,
+      },
+    };
   }
 
   public async refresh(user: UserEntity): Promise<Tokens> {

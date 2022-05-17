@@ -1,7 +1,7 @@
 import {
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -16,6 +16,9 @@ export class AccessTokenEntity {
   @Column()
   token: string;
 
+  @Column()
+  refresh_token_id: number;
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -25,6 +28,9 @@ export class AccessTokenEntity {
   @Column()
   last_used_at: Date;
 
-  // @ManyToOne(() => RefreshTokenEntity, (token) => token.id)
-  // refresh_token_id: RefreshTokenEntity;
+  @ManyToOne(() => RefreshTokenEntity, (token) => token.tokens, {
+    cascade: true,
+  })
+  @JoinColumn({ name: 'refresh_token_id' })
+  refreshToken: RefreshTokenEntity;
 }
